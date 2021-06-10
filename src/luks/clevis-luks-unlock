@@ -80,5 +80,5 @@ else
         exit 1
     fi
 
-    echo -n "${pt}" | cryptsetup "${OPENARGS}" open -d- "${DEV}" "${NAME}"
+    echo -n "${pt}" | cryptsetup ${OPENARGS} open -d- "${DEV}" "${NAME}"
 fi
