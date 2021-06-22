@@ -21,7 +21,6 @@ TEST=$(basename "${0}")
 
 on_exit() {
     [ ! -d "${TMP}" ] && return 0
-    tang_stop "${TMP}"
     rm -rf "${TMP}"
 }
 
