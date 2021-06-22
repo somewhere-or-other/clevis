@@ -19,6 +19,11 @@ TEST=$(basename "${0}")
 
 . clevis-luks-common-functions
 
+#set up a "cryptsetup" function, to hijack the command
+cryptsetup () { echo "$*" | grep -q -- "$TESTPARAM"; }
+
+export -f cryptsetup
+
 on_exit() {
     [ ! -d "${TMP}" ] && return 0
     rm -rf "${TMP}"
@@ -33,11 +38,6 @@ DEV="${TMP}/luks1-device"
 new_device "luks1" "${DEV}"
 
 TESTPARAM="arbitrarytestparameter"
-
-#set up a "cryptsetup" function, to hijack the command
-cryptsetup () { echo "$*" | grep -q -- "$TESTPARAM"; }
-
-export -f cryptsetup
 
 echo -n "DEBUGGING: which cryptsetup: "; which cryptsetup
 
