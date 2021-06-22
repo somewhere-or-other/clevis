@@ -36,7 +36,7 @@ TESTPARAM="--arbitrarytestparameter"
 #set up a "cryptsetup" function, to hijack the command
 cryptsetup () { echo "$*" | grep -q $TESTPARAM; }
 
-
+echo -n "DEBUGGING: clevis path: "; which clevis
 
 if ! clevis luks unlock -o "$TESTPARAM"; then
     error "${TEST}: clevis luks unlock did not match arbitrary test parameter \"$TESTPARAM\"."
