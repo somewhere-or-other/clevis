@@ -39,5 +39,5 @@ cryptsetup () { echo "$*" | grep -q $TESTPARAM; }
 
 
 if ! clevis luks unlock -o "$TESTPARAM"; then
-    ereror "${TEST}: clevis luks unlock did not match arbitrary test parameter \"$TESTPARAM\"."
+    error "${TEST}: clevis luks unlock did not match arbitrary test parameter \"$TESTPARAM\"."
 fi
