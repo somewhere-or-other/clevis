@@ -49,7 +49,16 @@ fi
 TESTPARAM="arbitrarytestparameter"
 
 #set up a "cryptsetup" function, to hijack the command
-cryptsetup () { echo "$*" | grep -q -- "arbitrarytestparameter"; }
+cryptsetup () { 
+    #need to handle "cryptsetup isLuks" from clevis-luks-unlock
+    if [[ $1 == "isLuks" ]]; then
+        return 0;
+    elif [[ $1 == "luksUUID" ]]; then
+        echo "TESTINGLUKSUUID"
+    else
+        echo "$*" | grep -q -- "arbitrarytestparameter"; 
+    fi
+}
 export -f cryptsetup
 
 if ! clevis-luks-unlock -o "$TESTPARAM" -d ${DEV} -n clevis_unlock_test; then
