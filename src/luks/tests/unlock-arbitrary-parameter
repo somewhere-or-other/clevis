@@ -32,11 +32,11 @@ TMP="$(mktemp -d)"
 DEV="${TMP}/luks1-device"
 new_device "luks1" "${DEV}"
 
-# 
-# #set up a "cryptsetup" function, to hijack the command
-# cryptsetup () { echo "$*" | grep -q -- "$TESTPARAM"; }
-# 
-# export -f cryptsetup
+
+#set up a "cryptsetup" function, to hijack the command
+cryptsetup () { echo "$*" | grep -q -- "$TESTPARAM"; }
+ 
+export -f
 
 TESTPARAM="arbitrarytestparameter"
 
