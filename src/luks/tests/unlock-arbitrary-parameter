@@ -41,6 +41,7 @@ export -f
 
 
 echo -n "DEBUGGING: which cryptsetup: "; which cryptsetup
+echo -n "DEBUGGING: which clevis-luks-unlock: "; which clevis-luks-unlock
 
 if ! clevis-luks-unlock -o "$TESTPARAM" -d ${DEV} -n clevis_unlock_test; then
     error "${TEST}: clevis luks unlock did not match arbitrary test parameter \"$TESTPARAM\"."
