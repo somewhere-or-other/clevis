@@ -20,20 +20,38 @@ TEST=$(basename "${0}")
 . clevis-luks-common-functions
 
 on_exit() {
-    rm -rf "${DEV}"
+    [ ! -d "${TMP}" ] && return 0
+    tang_stop "${TMP}"
+    rm -rf "${TMP}"
 }
 
 trap 'on_exit' EXIT
 trap 'on_exit' ERR
 
-DEV="$(mktemp)"
+TMP="$(mktemp -d)"
+
+port=$(tang_new_random_port)
+tang_run "${TMP}" "${port}"
+
+url="http://localhost:${port}"
+adv="${TMP}/adv"
+tang_get_adv "${port}" "${adv}"
+
+cfg=$(printf '{"url":"%s","adv":"%s"}' "$url" "$adv")
+
+DEV="${TMP}/luks1-device"
+new_device "luks1" "${DEV}"
+
+if ! clevis luks bind -f -d "${DEV}" tang "${cfg}" <<< "${DEFAULT_PASS}"; then
+    error "${TEST}: Bind should have succeeded."
+fi
 
 TESTPARAM="arbitrarytestparameter"
 
 #set up a "cryptsetup" function, to hijack the command
 cryptsetup () { echo "$*" | grep -q -- "$TESTPARAM"; }
-export -f
-declare -x -f cryptsetup
+export -f c
+
 
 echo -n "DEBUGGING: type cryptsetup: "; type cryptsetup
 echo -n "DEBUGGING: which clevis-luks-unlock: "; which clevis-luks-unlock
