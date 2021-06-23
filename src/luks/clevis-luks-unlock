@@ -57,8 +57,6 @@ while getopts ":d:n:t:o:" o; do
     esac
 done
 
-echo -n "DEBUGGING: inside clevis-luks-unlock: type cryptsetup: "; type cryptsetup
-
 if [ -z "$DEV" ]; then
     echo "Did not specify a device!" >&2
     usage
