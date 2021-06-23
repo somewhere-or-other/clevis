@@ -80,5 +80,7 @@ else
         exit 1
     fi
 
+    echo -n "DEBUGGING: inside clevis-luks-unlock: type cryptsetup: "; type cryptsetup
+
     echo -n "${pt}" | cryptsetup ${OPENARGS} open -d- "${DEV}" "${NAME}"
 fi
