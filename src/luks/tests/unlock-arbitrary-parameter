@@ -54,8 +54,7 @@ cryptsetup () {
     echo -n "DEBUGGING: inside cryptsetup: Called as: $*"
     
     if [[ $1 == "isLuks" ]]; then
-        echo "DEBUGGING: in isLuks branch; returning 0"
-        return 0;
+        echo 0;
     elif [[ $1 == "luksUUID" ]]; then
         echo "TESTINGLUKSUUID"
     else
