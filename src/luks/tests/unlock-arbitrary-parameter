@@ -54,11 +54,13 @@ cryptsetup () {
     echo -n "DEBUGGING: inside cryptsetup: Called as: $*"
     
     if [[ $1 == "isLuks" ]]; then
-        echo 0;
+        exit 0;
     elif [[ $1 == "luksUUID" ]]; then
         echo "TESTINGLUKSUUID"
+        exit 0;
     else
-        echo "$*" | grep -q -- "arbitrarytestparameter"; 
+        echo "$*" | grep -q -- "arbitrarytestparameter"
+        exit $?
     fi
 }
 export -f cryptsetup
